@@ -2,6 +2,7 @@ import { SparklesIcon } from "@heroicons/react/outline";
 import React from "react";
 import Input from "./Input";
 import Post from "./Post";
+import { Suspense } from "react";
 
 const Feed = () => {
   const posts = [
@@ -32,7 +33,9 @@ const Feed = () => {
           <SparklesIcon className=" h-5" />
         </div>
       </div>
-      <Input />
+      <Suspense fallback={<p>Loading input</p>}>
+        <Input />
+      </Suspense>
       {posts.map((post) => (
         <Post key={post.id} post={post}/>
       ))}
