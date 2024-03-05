@@ -1,6 +1,9 @@
+import { getServerSession } from "next-auth";
 import Feed from "./ui/Feed";
 import Sidebar from "./ui/Sidebar";
 import { Widgets } from "./ui/Widgets";
+import { signOut, useSession } from "next-auth/react";
+import authConfig from "./utils/auth";
 
 export default function Home() {
   return (
@@ -10,8 +13,7 @@ export default function Home() {
       {/* Feed */}
       <Feed />
       {/* widgets  */}
-      <Widgets  />
+      <Widgets />
     </main>
   );
 }
-

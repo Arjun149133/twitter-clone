@@ -1,12 +1,12 @@
 import getRandomUsers from "./getRandomUsers";
 
-export default async function RandomUsersList() {
+export default async function RandomUsersList({ randmUserNum }) {
   const randomUsers = await getRandomUsers();
   const users = randomUsers.results;
-
+  const userList = users.slice(0, randmUserNum);
   return (
     <>
-      {users.slice(0, 3).map((user) => (
+      {userList.map((user) => (
         <div
           key={user.login.username}
           className=" flex items-center px-4 py-2 cursor-pointer hover:bg-gray-200 "
