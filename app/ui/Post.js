@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import {
   ChartBarIcon,
   ChatIcon,
@@ -20,11 +21,15 @@ import { db, storage } from "../../firebase";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { deleteObject, ref } from "firebase/storage";
+import { useRecoilState } from "recoil";
+import { modalState, postIdState } from "../../atoms/modalAtom";
 
 const Post = ({ post }) => {
   const { data: session } = useSession();
   const [likes, setLikes] = useState([]);
   const [hasLiked, setHasLiked] = useState(false);
+  const [open, setOpen] = useRecoilState(modalState);
+  const [postId, setPostId] = useRecoilState(postIdState);
 
   useEffect(() => {
     const unsub = onSnapshot(
@@ -58,17 +63,22 @@ const Post = ({ post }) => {
   const deletePost = async () => {
     if (window.confirm("Are you sure you want to delete this post")) {
       await deleteDoc(doc(db, "posts", post.id));
-      await deleteObject(ref(storage, `posts/${post.id}/image`));
+      if (post.data().image) {
+        await deleteObject(ref(storage, `posts/${post.id}/image`));
+      }
     }
   };
 
   return (
-    <div className=" flex p-3 cursor-pointer border-b border-gray-200">
+    <div className=" flex p-1 cursor-pointer border-b border-gray-200">
       {/* image  */}
-      <img
-        className=" h-11 w-11 rounded-full mr-4"
+      <Image
         src={post.data().userImg}
+        quality={100}
         alt="user"
+        width={50}
+        height={50}
+        className=" h-11 w-11 rounded-full mr-4"
       />
 
       {/* right side  */}
@@ -107,7 +117,17 @@ const Post = ({ post }) => {
         {/* icons */}
 
         <div className=" flex justify-between text-gray-500 p-2">
-          <ChatIcon className=" h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-red-100" />
+          <ChatIcon
+            onClick={() => {
+              if (!session) {
+                signIn();
+              } else {
+                setPostId(post.id);
+                setOpen(!open);
+              }
+            }}
+            className=" h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-red-100"
+          />
           {session?.user?.uid === post.data().id && (
             <TrashIcon
               onClick={deletePost}

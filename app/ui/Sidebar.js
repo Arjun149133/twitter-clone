@@ -13,9 +13,11 @@ import {
 } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 const Sidebar = () => {
   const { data: session } = useSession();
+
   return (
     <div className=" hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-24">
       <div className="hoverEffect p-0 hover:bg-blue-100 xl:px-1">
@@ -43,10 +45,12 @@ const Sidebar = () => {
           </button>
 
           <div className="hoverEffect flex text-gray-700 items-center justify-center xl:justify-start mt-auto">
-            <img
-              onClick={() => signOut()}
+            <Image
               src={session?.user.image}
+              quality={100}
               alt="user"
+              width={50}
+              height={50}
               className=" h-10 w-10 rounded-full xl:mr-2"
             />
             <div className=" leading-5 hidden xl:inline">

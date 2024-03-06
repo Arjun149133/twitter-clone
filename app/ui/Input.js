@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import { db, storage } from "../../firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import Image from "next/image";
 const Input = () => {
   const { data: session } = useSession();
   const [input, setInput] = useState("");
@@ -66,10 +67,13 @@ const Input = () => {
     <>
       {session && (
         <div className=" flex border-b border-gray-200 p-3 space-x-3">
-          <img
+          <Image
             src={session?.user.image}
+            quality={100}
             alt="user"
-            className=" h-11 w-11 rounded-full cursor-pointer hover:brightness-95"
+            width={50}
+            height={50}
+            className=" h-10 w-10 rounded-full xl:mr-2"
           />
           <div className=" w-full divide-y divide-gray-200">
             <div>
