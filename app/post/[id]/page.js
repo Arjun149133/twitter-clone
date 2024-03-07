@@ -7,18 +7,37 @@ import { usePathname, useRouter } from "next/navigation";
 import Post from "../../ui/Post";
 import { useEffect, useState } from "react";
 import { db } from "../../../firebase";
-import { doc, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
+import Comment from "../../ui/Comment";
 
 export default async function Page() {
   const router = useRouter();
   const path = usePathname();
   const id = path.split("/")[2];
   const [post, setPost] = useState(null);
+  const [comments, setComments] = useState([]);
 
   useEffect(
     () => onSnapshot(doc(db, "posts", id), (snapshot) => setPost(snapshot)),
-    [db]
+    [db, id]
   );
+
+  useEffect(() => {
+    onSnapshot(
+      query(
+        collection(db, "posts", id, "comments"),
+        orderBy("timestamp", "desc")
+      ),
+      (snapshot) => setComments(snapshot.docs)
+    );
+  }, [db, id]);
+
   return (
     <main className=" flex min-h-screen mx-auto">
       {/* Sidebar */}
@@ -39,6 +58,18 @@ export default async function Page() {
           </div>
         </div>
         <Post id={id} post={post} />
+        {comments.length > 0 && (
+          <>
+            {comments.map((comment) => (
+              <Comment
+                key={comment.id}
+                commentId={comment.id}
+                originalPostId={id}
+                comment={comment?.data()}
+              />
+            ))}
+          </>
+        )}
       </div>
 
       {/* widgets  */}

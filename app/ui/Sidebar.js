@@ -13,10 +13,11 @@ import {
 } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   return (
     <div className=" hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-24">
@@ -24,7 +25,9 @@ const Sidebar = () => {
         <Image src="/twitter.svg" width={50} height={50} alt="twitter"></Image>
       </div>
       <div className=" mt-4 mb-2.5 xl:items-start">
-        <SidebarMenuItem text="Home" Icon={HomeIcon} active />
+        <div onClick={() => router.push("/")}>
+          <SidebarMenuItem text="Home" Icon={HomeIcon} active />
+        </div>
         <SidebarMenuItem text="Explore" Icon={HashtagIcon} />
         {session && (
           <>
