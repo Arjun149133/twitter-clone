@@ -15,6 +15,7 @@ import {
   query,
 } from "firebase/firestore";
 import Comment from "../../ui/Comment";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default async function Page() {
   const router = useRouter();
@@ -60,14 +61,24 @@ export default async function Page() {
         <Post id={id} post={post} />
         {comments.length > 0 && (
           <>
-            {comments.map((comment) => (
-              <Comment
-                key={comment.id}
-                commentId={comment.id}
-                originalPostId={id}
-                comment={comment?.data()}
-              />
-            ))}
+            <AnimatePresence>
+              {comments.map((comment) => (
+                <motion.div
+                  key={comment.id}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1 }}
+                >
+                  <Comment
+                    key={comment.id}
+                    commentId={comment.id}
+                    originalPostId={id}
+                    comment={comment?.data()}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </>
         )}
       </div>

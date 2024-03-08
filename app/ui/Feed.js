@@ -6,7 +6,7 @@ import Post from "./Post";
 import { Suspense } from "react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../../firebase";
-import { AnimatePresence, animate, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
