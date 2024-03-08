@@ -10,6 +10,7 @@ import {
   HashtagIcon,
   InboxIcon,
   UserIcon,
+  LogoutIcon,
 } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -43,9 +44,16 @@ const Sidebar = () => {
 
       {session ? (
         <>
-          <button className=" bg-blue-500 text-white rounded-full w-56 h-12 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline">
-            Tweet
+          <button
+            onClick={signOut}
+            className=" bg-blue-500 text-white rounded-full w-56 h-12 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline"
+          >
+            Sign Out
           </button>
+
+          <div onClick={signOut} className=" xl:hidden">
+            <SidebarMenuItem text="signout" Icon={LogoutIcon} />
+          </div>
 
           <div className="hoverEffect flex text-gray-700 items-center justify-center xl:justify-start mt-auto">
             <Image
