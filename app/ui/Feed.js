@@ -1,5 +1,5 @@
 "use client";
-import { SparklesIcon } from "@heroicons/react/outline";
+import { SparklesIcon, MenuIcon } from "@heroicons/react/outline";
 import React, { useEffect, useState } from "react";
 import Input from "./Input";
 import Post from "./Post";
@@ -21,9 +21,12 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className=" xl:ml-[420px] border-l border-r xl:min-w-[600px] sm:ml-[73px] flex-grow max-w-xl border-gray-200">
+    <div className=" xl:ml-[420px] border-l border-r xl:min-w-[600px] sm:ml-[73px] flex-grow max-w-xl border-gray-200 overflow-hidden">
       <div className=" flex py-2 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
-        <h2 className=" text-lg sm:text-xl font-bold cursor-pointer">Home</h2>
+        <div className=" flex hoverEffect items-center justify-center px-0 w-9 h-9">
+          <MenuIcon className=" h-5" />
+        </div>
+        <h2 className=" text-lg sm:text-xl font-bold cursor-pointer pt-1">Home</h2>
         <div className=" hoverEffect items-center justify-center px-0 ml-auto w-9 h-9">
           <SparklesIcon className=" h-5" />
         </div>

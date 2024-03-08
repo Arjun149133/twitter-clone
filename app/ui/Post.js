@@ -86,7 +86,7 @@ const Post = ({ id, post }) => {
   };
 
   return (
-    <div className=" flex p-1 cursor-pointer border-b border-gray-200">
+    <div className=" flex p-1 cursor-pointer border-b border-gray-200 pr-2">
       {/* image  */}
       {post?.data()?.userImg && (
         <Image
@@ -108,9 +108,6 @@ const Post = ({ id, post }) => {
             <h4 className=" font-bold text-[15px] sm:text-[16px] hover:underline">
               {post?.data()?.name}
             </h4>
-            <span className=" text-sm sm:text-[15px]">
-              @{post?.data()?.username} -{" "}
-            </span>
             <span className=" text-sm sm:text-[15px] hover:underline">
               <Moment fromNow>{post?.data()?.timestamp?.toDate()}</Moment>
             </span>
@@ -119,9 +116,14 @@ const Post = ({ id, post }) => {
           <DotsHorizontalIcon className=" h-10 hoverEffect w-10 hover:bg-sky-100 hover:text-sky-500 p-2" />
         </div>
         {/* post text  */}
+        <div className=" mb-2">
+          <span className=" text-sm sm:text-[15px]">
+            @{post?.data()?.username} -{" "}
+          </span>
+        </div>
         <p
           onClick={() => router.push(`/post/${id}`)}
-          className=" text-gray-800 text-[15px] sm:text-[16px] mb-2"
+          className=" text-gray-800 text-[15px] sm:text-[16px] mb-2 font-semibold opacity-95"
         >
           {post?.data()?.text}
         </p>
