@@ -117,9 +117,6 @@ const Comment = ({ comment, commentId, originalPostId }) => {
             <h4 className=" font-bold text-[15px] sm:text-[16px] hover:underline">
               {comment?.name}
             </h4>
-            <span className=" text-sm sm:text-[15px]">
-              @{comment?.username} -{" "}
-            </span>
             <span className=" text-sm sm:text-[15px] hover:underline">
               <Moment fromNow>{comment?.timestamp?.toDate()}</Moment>
             </span>
@@ -127,8 +124,13 @@ const Comment = ({ comment, commentId, originalPostId }) => {
           {/* dot icon  */}
           <DotsHorizontalIcon className=" h-10 hoverEffect w-10 hover:bg-sky-100 hover:text-sky-500 p-2" />
         </div>
+        <div className=" mb-2">
+          <span className=" text-sm sm:text-[15px]">
+            @{comment?.username} -{" "}
+          </span>
+        </div>
         {/* post text  */}
-        <p className=" text-gray-800 text-[15px] sm:text-[16px] mb-2">
+        <p className=" text-gray-800 text-[15px] sm:text-[16px] mb-2 font-semibold">
           {comment?.comment}
         </p>
 
