@@ -127,7 +127,7 @@ const Post = ({ id, post }) => {
         </p>
 
         {/* post image  */}
-        {post?.data().image && (
+        {post?.data()?.image && (
           <Image
             onClick={() => router.push(`/post/${id}`)}
             quality={100}
