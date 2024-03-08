@@ -97,7 +97,7 @@ const Comment = ({ comment, commentId, originalPostId }) => {
   };
 
   return (
-    <div className=" flex p-1 cursor-pointer border-b border-gray-200 pl-20">
+    <div className=" flex p-1 cursor-pointer border-b border-gray-200 xl:pl-20 pl-2">
       {/* image  */}
       <Image
         src={comment?.userImg}
