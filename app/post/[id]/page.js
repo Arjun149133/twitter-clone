@@ -23,6 +23,7 @@ export default async function Page() {
   const id = path.split("/")[2];
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(
     () => onSnapshot(doc(db, "posts", id), (snapshot) => setPost(snapshot)),
