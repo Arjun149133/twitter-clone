@@ -9,3 +9,8 @@ export const postIdState = atom({
   key: "postIdState",
   default: "id",
 });
+
+export const themeState = atom({
+  key: "themeState",
+  default: "dark",
+});

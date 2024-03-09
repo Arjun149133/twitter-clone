@@ -5,7 +5,7 @@ import {
   LoginIcon,
   LogoutIcon,
 } from "@heroicons/react/outline";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Input from "./Input";
 import Post from "./Post";
 import { Suspense } from "react";
@@ -14,11 +14,14 @@ import { db } from "../../firebase";
 import { AnimatePresence, motion } from "framer-motion";
 import Sidebar from "./Sidebar";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useRecoilValue } from "recoil";
+import { themeState } from "@/atoms/modalAtom";
 
 const Feed = () => {
   const { data: session } = useSession();
   const [posts, setPosts] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const theme = useRecoilValue(themeState);
 
   useEffect(() => {
     return onSnapshot(
@@ -31,18 +34,26 @@ const Feed = () => {
 
   return (
     <div className=" xl:ml-[420px] border-l border-r xl:min-w-[600px] sm:ml-[73px] flex-grow max-w-xl border-gray-200 overflow-hidden">
-      <div className=" flex py-2 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
+      <div
+        className={`${
+          theme === "dark" ? " bg-black" : " bg-white"
+        } flex py-2 px-3 sticky top-0 z-50 border-b border-gray-200`}
+      >
         {isSidebarOpen ? (
           <div
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className=" flex hoverEffect items-center justify-center px-0 w-9 h-9"
+            className={`${
+              theme === "dark" ? "darkHoverEffect" : "hoverEffect"
+            } flex items-center justify-center px-0 w-9 h-9`}
           >
             <MenuIcon className=" h-5" />
           </div>
         ) : (
           <div
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className=" flex hoverEffect items-center justify-center px-0 w-9 h-9"
+            className={`${
+              theme === "dark" ? "darkHoverEffect" : "hoverEffect"
+            } flex items-center justify-center px-0 w-9 h-9`}
           >
             <MenuIcon className=" h-5" />
           </div>
@@ -53,14 +64,18 @@ const Feed = () => {
         {session ? (
           <div
             onClick={signOut}
-            className=" flex hoverEffect items-center justify-center px-0 ml-auto w-9 h-9"
+            className={`${
+              theme === "dark" ? "darkHoverEffect" : "hoverEffect"
+            } flex items-center justify-center px-0 ml-auto w-9 h-9`}
           >
             <LogoutIcon className=" h-5" />
           </div>
         ) : (
           <div
             onClick={signIn}
-            className=" flex hoverEffect items-center justify-center px-0 ml-auto w-9 h-9"
+            className={`${
+              theme === "dark" ? "darkHoverEffect" : "hoverEffect"
+            } flex items-center justify-center px-0 ml-auto w-9 h-9`}
           >
             <LoginIcon className=" h-5" />
           </div>

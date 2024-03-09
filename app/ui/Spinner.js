@@ -1,7 +1,16 @@
+"use client";
+import { themeState } from "@/atoms/modalAtom";
+import { useRecoilValue } from "recoil";
 
 const Spinner = () => {
+  const theme = useRecoilValue(themeState);
   return (
-    <div role="status" className=" flex h-screen justify-center items-center">
+    <div
+      role="status"
+      className={`${
+        theme === "dark" ? " bg-black" : ""
+      } flex h-screen justify-center items-center`}
+    >
       <svg
         aria-hidden="true"
         className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"

@@ -15,14 +15,17 @@ import {
 import { HomeIcon } from "@heroicons/react/solid";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useRecoilValue } from "recoil";
+import { themeState } from "@/atoms/modalAtom";
 
 const Sidebar = () => {
   const { data: session } = useSession();
+  const theme = useRecoilValue(themeState);
   const router = useRouter();
 
   return (
-    <div className=" hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-24 z-50">
-      <div className="hoverEffect p-0 hover:bg-blue-100 xl:px-1">
+    <div className=" hidden sm:flex flex-col p-2 xl:items-start fixed h-full max-h-full xl:ml-24 z-50">
+      <div className={`${theme === "dark" ? "darkHoverEffect hover:bg-blue-950" : "hoverEffect hover:bg-blue-100"} p-0  xl:px-1`}>
         <Image src="/twitter.svg" width={50} height={50} alt="twitter"></Image>
       </div>
       <div className=" mt-4 mb-2.5 xl:items-start">
@@ -55,7 +58,13 @@ const Sidebar = () => {
             <SidebarMenuItem text="signout" Icon={LogoutIcon} />
           </div>
 
-          <div className="hoverEffect flex text-gray-700 items-center justify-center xl:justify-start mt-auto">
+          <div
+            className={`${
+              theme === "dark"
+                ? " text-white darkHoverEffect"
+                : "text-gray-700 hoverEffect"
+            } flex  items-center justify-center xl:justify-start mt-auto`}
+          >
             <Image
               src={session?.user.image}
               quality={100}

@@ -16,12 +16,15 @@ import {
 import { db, storage } from "../../firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import Image from "next/image";
+import { useRecoilValue } from "recoil";
+import { themeState } from "@/atoms/modalAtom";
 const Input = () => {
   const { data: session } = useSession();
   const [input, setInput] = useState("");
   const filePickerRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const theme = useRecoilValue(themeState);
 
   const sendPost = async () => {
     if (loading) return;
@@ -80,7 +83,11 @@ const Input = () => {
               <textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className=" w-full border-none focus:ring-0 text-lg placeholder-gray-700 tracking-wide min-h-[75px] text-gray-700"
+                className={`w-full border-none focus:ring-0 text-lg tracking-wide min-h-[75px] ${
+                  theme === "dark"
+                    ? " bg-black text-white"
+                    : " text-gray-700 placeholder-gray-700"
+                }`}
                 rows="2"
                 placeholder="Whats happening?"
               ></textarea>

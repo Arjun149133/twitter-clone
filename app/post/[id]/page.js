@@ -16,6 +16,8 @@ import {
 } from "firebase/firestore";
 import Comment from "../../ui/Comment";
 import { AnimatePresence, motion } from "framer-motion";
+import { useRecoilValue } from "recoil";
+import { themeState } from "@/atoms/modalAtom";
 
 export default async function Page() {
   const router = useRouter();
@@ -24,6 +26,7 @@ export default async function Page() {
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const theme = useRecoilValue(themeState);
 
   useEffect(
     () => onSnapshot(doc(db, "posts", id), (snapshot) => setPost(snapshot)),
@@ -41,14 +44,26 @@ export default async function Page() {
   }, [db, id]);
 
   return (
-    <main className=" flex min-h-screen mx-auto">
+    <main
+      className={`${
+        theme === "dark" ? " bg-black text-white" : ""
+      } flex min-h-screen mx-auto`}
+    >
       {/* Sidebar */}
       <Sidebar />
       {/* Feed */}
       <div className=" xl:ml-[420px] border-l border-r xl:min-w-[720px] sm:ml-[73px] flex-grow max-w-xl overflow-hidden border-gray-200">
-        <div className=" flex py-2 px-3 sticky top-0 z-50 bg-white border-b border-gray-200 items-center">
+        <div
+          className={`${
+            theme === "dark" ? " bg-black text-white" : " bg-white"
+          } flex py-2 px-3 sticky top-0 z-50 border-b border-gray-200 items-center`}
+        >
           <div className=" flex justify-center items-center space-x-2">
-            <div className="hoverEffect flex items-center justify-center">
+            <div
+              className={`${
+                theme === "dark" ? "darkHoverEffect" : "hoverEffect"
+              } flex items-center justify-center`}
+            >
               <ArrowNarrowLeftIcon
                 onClick={() => router.push("/")}
                 className=" h-5"

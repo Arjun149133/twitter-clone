@@ -21,8 +21,8 @@ import { db, storage } from "../../firebase";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { deleteObject, ref } from "firebase/storage";
-import { useRecoilState } from "recoil";
-import { modalState, postIdState } from "../../atoms/modalAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { modalState, postIdState, themeState } from "../../atoms/modalAtom";
 import { useRouter } from "next/navigation";
 
 const Comment = ({ comment, commentId, originalPostId }) => {
@@ -31,6 +31,7 @@ const Comment = ({ comment, commentId, originalPostId }) => {
   const [hasLiked, setHasLiked] = useState(false);
   const [open, setOpen] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
+  const theme = useRecoilValue(themeState)
 
   const router = useRouter();
 
@@ -130,7 +131,7 @@ const Comment = ({ comment, commentId, originalPostId }) => {
           </span>
         </div>
         {/* post text  */}
-        <p className=" text-gray-800 text-[15px] sm:text-[16px] mb-2 font-semibold">
+        <p className={`${theme === "dark" ? " text-white font-normal" : " text-gray-800 font-semibold"}  text-[15px] sm:text-[16px] mb-2 `}>
           {comment?.comment}
         </p>
 

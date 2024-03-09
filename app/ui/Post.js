@@ -21,8 +21,8 @@ import { db, storage } from "../../firebase";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { deleteObject, ref } from "firebase/storage";
-import { useRecoilState } from "recoil";
-import { modalState, postIdState } from "../../atoms/modalAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { modalState, postIdState, themeState } from "../../atoms/modalAtom";
 import { useRouter } from "next/navigation";
 
 const Post = ({ id, post }) => {
@@ -32,6 +32,7 @@ const Post = ({ id, post }) => {
   const [hasLiked, setHasLiked] = useState(false);
   const [open, setOpen] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
+  const theme = useRecoilValue(themeState);
 
   const router = useRouter();
 
@@ -123,7 +124,11 @@ const Post = ({ id, post }) => {
         </div>
         <p
           onClick={() => router.push(`/post/${id}`)}
-          className=" text-gray-800 text-[15px] sm:text-[16px] mb-2 font-semibold opacity-95"
+          className={`${
+            theme === "dark"
+              ? " text-white font-normal"
+              : "text-gray-800 font-semibold"
+          } text-[15px] sm:text-[16px] mb-2 opacity-95`}
         >
           {post?.data()?.text}
         </p>
@@ -154,7 +159,11 @@ const Post = ({ id, post }) => {
                   setOpen(!open);
                 }
               }}
-              className=" h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-red-100"
+              className={`${
+                theme === "dark"
+                  ? "darkHoverEffect hover:text-sky-900"
+                  : "hoverEffect hover:text-sky-500 hover:bg-red-100"
+              } h-9 w-9 hoverEffect p-2`}
             />
             {comments.length > 0 && (
               <span className=" text-sm sm:text-[15px]">{comments.length}</span>
@@ -163,19 +172,31 @@ const Post = ({ id, post }) => {
           {session?.user?.uid === post?.data()?.id && (
             <TrashIcon
               onClick={deletePost}
-              className=" h-9 w-9 hoverEffect p-2 hover:text-red-500 hover:bg-sky-100"
+              className={`${
+                theme === "dark"
+                  ? "darkHoverEffect hover:text-red-900"
+                  : "hoverEffect hover:text-red-500 hover:bg-red-100"
+              } h-9 w-9 hoverEffect p-2`}
             />
           )}
           <div className=" flex items-center">
             {hasLiked ? (
               <FilledHeart
                 onClick={likePost}
-                className=" h-9 w-9 hoverEffect p-2 text-red-400 hover:bg-red-100"
+                className={`${
+                  theme === "dark"
+                    ? "darkHoverEffect text-red-500"
+                    : "hoverEffect text-red-400 hover:bg-red-100"
+                } h-9 w-9 hoverEffect p-2`}
               />
             ) : (
               <HeartIcon
                 onClick={likePost}
-                className=" h-9 w-9 hoverEffect p-2 hover:text-red-400 hover:bg-red-100"
+                className={`${
+                  theme === "dark"
+                    ? "darkHoverEffect hover:text-red-900"
+                    : "hoverEffect hover:text-red-500 hover:bg-red-100"
+                } h-9 w-9 hoverEffect p-2`}
               />
             )}
             {likes.length > 0 && (
@@ -188,8 +209,20 @@ const Post = ({ id, post }) => {
               </span>
             )}
           </div>
-          <ShareIcon className=" h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100" />
-          <ChartBarIcon className=" h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100" />
+          <ShareIcon
+            className={`${
+              theme === "dark"
+                ? "darkHoverEffect hover:text-sky-900"
+                : "hoverEffect hover:text-sky-500 hover:bg-red-100"
+            } h-9 w-9 hoverEffect p-2`}
+          />
+          <ChartBarIcon
+            className={`${
+              theme === "dark"
+                ? "darkHoverEffect hover:text-sky-900"
+                : "hoverEffect hover:text-sky-500 hover:bg-red-100"
+            } h-9 w-9 hoverEffect p-2`}
+          />
         </div>
       </div>
     </div>
