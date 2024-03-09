@@ -52,11 +52,13 @@ export default async function Page() {
       {/* Sidebar */}
       <Sidebar />
       {/* Feed */}
-      <div className=" xl:ml-[420px] border-l border-r xl:min-w-[720px] sm:ml-[73px] flex-grow max-w-xl overflow-hidden border-gray-200">
+      <div className={`${
+        theme === "dark" ? " border-gray-800" : " border-gray-200"
+      } xl:ml-[420px] sm:border-r sm:border-l xl:min-w-[720px] sm:ml-[73px] flex-grow max-w-xl overflow-hidden`}>
         <div
           className={`${
-            theme === "dark" ? " bg-black text-white" : " bg-white"
-          } flex py-2 px-3 sticky top-0 z-50 border-b border-gray-200 items-center`}
+            theme === "dark" ? " bg-black text-white border-gray-800" : " bg-white border-gray-200"
+          } flex py-2 px-3 sticky top-0 z-50 border-b items-center`}
         >
           <div className=" flex justify-center items-center space-x-2">
             <div
