@@ -4,6 +4,8 @@ import {
   MenuIcon,
   LoginIcon,
   LogoutIcon,
+  SunIcon,
+  MoonIcon,
 } from "@heroicons/react/outline";
 import React, { use, useEffect, useState } from "react";
 import Input from "./Input";
@@ -14,14 +16,14 @@ import { db } from "../../firebase";
 import { AnimatePresence, motion } from "framer-motion";
 import Sidebar from "./Sidebar";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { themeState } from "@/atoms/modalAtom";
 
 const Feed = () => {
   const { data: session } = useSession();
   const [posts, setPosts] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const theme = useRecoilValue(themeState);
+  const [theme, setTheme] = useRecoilState(themeState);
 
   useEffect(() => {
     return onSnapshot(
@@ -37,14 +39,14 @@ const Feed = () => {
       <div
         className={`${
           theme === "dark" ? " bg-black" : " bg-white"
-        } flex py-2 px-3 sticky top-0 z-50 border-b border-gray-200`}
+        } flex py-2 px-3 sticky top-0 z-50 border-b border-gray-200 justify-center items-center`}
       >
         {isSidebarOpen ? (
           <div
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className={`${
               theme === "dark" ? "darkHoverEffect" : "hoverEffect"
-            } flex items-center justify-center px-0 w-9 h-9`}
+            } flex items-center justify-center px-0 w-9 h-9 xl:hidden`}
           >
             <MenuIcon className=" h-5" />
           </div>
@@ -53,7 +55,7 @@ const Feed = () => {
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className={`${
               theme === "dark" ? "darkHoverEffect" : "hoverEffect"
-            } flex items-center justify-center px-0 w-9 h-9`}
+            } flex items-center justify-center px-0 w-9 h-9 xl:hidden`}
           >
             <MenuIcon className=" h-5" />
           </div>
@@ -61,25 +63,38 @@ const Feed = () => {
         <h2 className=" text-lg sm:text-xl font-bold cursor-pointer pt-1">
           Home
         </h2>
-        {session ? (
-          <div
-            onClick={signOut}
-            className={`${
-              theme === "dark" ? "darkHoverEffect" : "hoverEffect"
-            } flex items-center justify-center px-0 ml-auto w-9 h-9`}
-          >
-            <LogoutIcon className=" h-5" />
-          </div>
-        ) : (
-          <div
-            onClick={signIn}
-            className={`${
-              theme === "dark" ? "darkHoverEffect" : "hoverEffect"
-            } flex items-center justify-center px-0 ml-auto w-9 h-9`}
-          >
-            <LoginIcon className=" h-5" />
-          </div>
-        )}
+        <div className=" flex ml-auto space-x-3 justify-center items-center">
+          {theme === "dark" ? (
+            <SunIcon
+              onClick={() => setTheme("light")}
+              className={`darkHoverEffect flex items-center justify-center px-0 ml-auto w-7 h-7 xl:size-12 transition duration-300 ease-in-out`}
+            />
+          ) : (
+            <MoonIcon
+              onClick={() => setTheme("dark")}
+              className={`hoverEffect flex items-center justify-center px-0 ml-auto w-7 h-7 transition duration-300 ease-in-out`}
+            />
+          )}
+          {session ? (
+            <div
+              onClick={signOut}
+              className={`${
+                theme === "dark" ? "darkHoverEffect" : "hoverEffect"
+              } flex items-center justify-center px-0 ml-auto w-9 h-9`}
+            >
+              <LogoutIcon className=" h-5" />
+            </div>
+          ) : (
+            <div
+              onClick={signIn}
+              className={`${
+                theme === "dark" ? "darkHoverEffect" : "hoverEffect"
+              } flex items-center justify-center px-0 ml-auto w-9 h-9`}
+            >
+              <LoginIcon className=" h-5" />
+            </div>
+          )}
+        </div>
       </div>
       <Suspense fallback={<p>Loading input</p>}>
         <Input />
