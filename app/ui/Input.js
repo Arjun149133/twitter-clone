@@ -69,7 +69,11 @@ const Input = () => {
   return (
     <>
       {session && (
-        <div className=" flex border-b border-gray-200 p-3 space-x-3">
+        <div
+          className={`${
+            theme === "dark" ? " border-gray-800" : " border-gray-200"
+          } flex border-b p-3 space-x-3`}
+        >
           <Image
             src={session?.user.image}
             quality={100}
@@ -78,7 +82,7 @@ const Input = () => {
             height={50}
             className=" h-10 w-10 rounded-full xl:mr-2"
           />
-          <div className=" w-full divide-y divide-gray-200">
+          <div className=" w-full divide-y divide-gray-500">
             <div>
               <textarea
                 value={input}

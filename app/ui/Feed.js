@@ -35,11 +35,17 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className=" xl:ml-[420px] border-l border-r xl:min-w-[600px] sm:ml-[73px] flex-grow max-w-xl border-gray-200 overflow-hidden">
+    <div
+      className={`${
+        theme === "dark" ? " border-gray-800" : " border-gray-200"
+      } sm:border-r sm:border-l xl:ml-[420px] xl:min-w-[600px] sm:ml-[73px] flex-grow max-w-xl overflow-hidden`}
+    >
       <div
         className={`${
-          theme === "dark" ? " bg-black" : " bg-white"
-        } flex py-2 px-3 sticky top-0 z-50 border-b border-gray-200 justify-center items-center`}
+          theme === "dark"
+            ? " bg-black border-gray-600"
+            : " bg-white border-gray-200"
+        } flex py-2 px-3 sticky top-0 z-50 border-b justify-center items-center`}
       >
         {isSidebarOpen ? (
           <div
@@ -72,7 +78,7 @@ const Feed = () => {
           ) : (
             <MoonIcon
               onClick={() => setTheme("dark")}
-              className={`hoverEffect flex items-center justify-center px-0 ml-auto w-7 h-7 transition duration-300 ease-in-out`}
+              className={`hoverEffect flex items-center justify-center px-0 ml-auto w-7 h-7 xl:size-12 transition duration-300 ease-in-out`}
             />
           )}
           {session ? (

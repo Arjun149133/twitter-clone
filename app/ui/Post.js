@@ -87,7 +87,11 @@ const Post = ({ id, post }) => {
   };
 
   return (
-    <div className=" flex p-1 cursor-pointer border-b border-gray-200 pr-2">
+    <div className={`${
+      theme === "dark"
+        ? " border-gray-800"
+        : " border-gray-200"
+    } flex p-1 cursor-pointer border-b  pr-2`}>
       {/* image  */}
       {post?.data()?.userImg && (
         <Image
